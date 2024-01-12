@@ -1,3 +1,7 @@
+[![build](https://github.com/zacharyburnett/ioscustomringtones/actions/workflows/build.yml/badge.svg)](https://github.com/zacharyburnett/ioscustomringtones/actions/workflows/build.yml)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ioscustomringtones)
+![PyPI - Version](https://img.shields.io/pypi/v/ioscustomringtones)
+
 # generate `Ringtones.plist` for custom iOS ring and alert tones
 ### list custom tones in iOS settings by generating `/Media/iTunes_Control/iTunes/Ringtones.plist`
 
