@@ -1,5 +1,5 @@
 [project]
-name = "ios_ringtones_plist"
+name = "ioscustomringtones"
 description = "list custom tones in iOS settings by generating `/Media/iTunes_Control/iTunes/Ringtones.plist`"
 authors = [{name= "Zachary Burnett", email="zachary.r.burnett@gmail.com"}]
 readme = "README.md"
@@ -30,10 +30,10 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Repository = "https://github.com/zacharyburnett/iOS_Ringtones_plist"
+Repository = "https://github.com/zacharyburnett/ioscustomringtones"
 
 [project.scripts]
-generate_ios_ringtones_plist = "iOS_Ringtones_plist.generate:main"
+generate_ios_ringtones_plist = "ioscustomringtones.generate:main"
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
@@ -49,4 +49,4 @@ exclude = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/iOS_Ringtones_plist"]
+packages = ["src/ioscustomringtones"]
