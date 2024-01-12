@@ -2,7 +2,7 @@
 list custom ringtones in iOS settings by generating `/Media/iTunes_Control/iTunes/Ringtones.plist`
 
 ```shell
-pip install ios_ringtones_plist
+pip install ios-ringtones-plist
 ```
 
 ### Instructions
@@ -24,9 +24,9 @@ ifuse ~/iPhone_Media/
 cp ~/Music/Ringtones/*.m4r ~/iPhone_Media/iTunes_Control/Ringtones/
 ```
 
-4. install `ios_ringtones_plist` with `pip`:
+4. install `ios-ringtones-plist` with `pip`:
 ```shell
-pip install ios_ringtones_plist
+pip install ios-ringtones-plist
 ```
 
 5. pass the directory you mounted to the `generate_ios_ringtones_plist` command (see more options below):
