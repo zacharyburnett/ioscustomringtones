@@ -9,12 +9,12 @@ from io import BytesIO
 
 def write_ios_ringtones_plist(
     media_directory: Annotated[
-        Path, typer.Argument(help="path to `/Media/` on the iOS device")
+        Path, typer.Argument(help="path to the mounted iOS `/Media/` directory")
     ],
     alerts_threshold: Annotated[
         Optional[int],
         typer.Option(
-            help="number of seconds under which to assume sound is an alert tone vs a ringtone"
+            help="number of seconds under which to assume sound is an alert tone, as opposed to a ringtone"
         ),
     ] = 10,
     binary: Annotated[

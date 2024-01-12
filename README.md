@@ -61,6 +61,6 @@ pip install ioscustomringtones
 
 6. unmount the `/Media/` directory from your local filesystem:
     ```shell
-    sudo umount ~/iPhone/
+    sudo umount ~/iPhone_Media/
     ```
 
