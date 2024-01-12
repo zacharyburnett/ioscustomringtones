@@ -23,27 +23,26 @@ def write_ios_ringtones_plist(
             help="whether to write `.plist` in binary format (as opposed to XML)"
         ),
     ] = True,
-    list_tones: Annotated[
+    write: Annotated[
         Optional[bool],
-        typer.Option(help="print tones to stdout"),
-    ] = False,
-    dryrun: Annotated[
+        typer.Option(help="write to file; otherwise print to stdout"),
+    ] = True,
+    overwrite: Annotated[
         Optional[bool],
         typer.Option(
-            help="write to file; otherwise print to stdout"
+            help="write over an existing file",
         ),
-    ] = True,
+    ] = False,
+    verbose: Annotated[
+        Optional[bool],
+        typer.Option(help="print individual tones to stdout"),
+    ] = False,
 ) -> str:
     """
-    reads existing `.m4r` files in `/Media/iTunes_Control/Ringtones/`
-    and writes `/Media/iTunes_Control/iTunes/Ringtones.plist` on an iOS device
+    on a mounted iOS filesystem,
+    reads existing `.m4r` files at `/Media/iTunes_Control/Ringtones/`
+    and generates `/Media/iTunes_Control/iTunes/Ringtones.plist`
     """
-
-    # header = (
-    #     '<?xml version="1.0" encoding="UTF-8"?>\n'
-    #     '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n'
-    #     '<plist version="1.0">'
-    # )
 
     data = {"Ringtones": {}}
 
@@ -53,10 +52,9 @@ def write_ios_ringtones_plist(
         audio_length = mp4.MP4(filename).info.length
         audio_type = "tone" if audio_length < alerts_threshold else "ringtone"
 
-        if list_tones:
+        if verbose:
             print(f"{audio_type:<8} ({audio_length:.1f}s) - {filename.stem}")
 
-        
         data["Ringtones"][filename.name] = {
             "Name": filename.stem,
             "GUID": f"B9753FD82AE718E{2+index}",
@@ -68,22 +66,27 @@ def write_ios_ringtones_plist(
     del index, filename
 
     if len(data["Ringtones"]) == 0:
-        raise RuntimeError(f"no `.m4r` files found in {media_directory/'iTunes_Control/Ringtones'}")
-    
-    if not dryrun:
+        raise RuntimeError(
+            f"no `.m4r` files found in {media_directory/'iTunes_Control/Ringtones'}"
+        )
+
+    if not write:
         file_object = BytesIO()
     else:
-        file_object = open(media_directory / "iTunes_Control" / "iTunes" / "Ringtones.plist", "wb")
-    
+        filename = media_directory / "iTunes_Control" / "iTunes" / "Ringtones.plist"
+        if not filename.exists() or overwrite:
+            file_object = open(filename, "wb")
+        else:
+            raise FileExistsError("file exists; use `--overwrite` to overwrite")
+
     plistlib.dump(
         data,
         file_object,
         fmt=plistlib.FMT_BINARY if binary else plistlib.FMT_XML,
     )
 
-    if not dryrun:
+    if not write:
         print(file_object.getvalue())
-        
 
 
 def main():
