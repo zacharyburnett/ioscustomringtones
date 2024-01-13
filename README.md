@@ -11,19 +11,26 @@ pip install ioscustomringtones
 
 #### Instructions
 
-1. convert audio files to `.m4a`, then rename to `.m4r`:
+> [!IMPORTANT]
+> This process requires you to connect your iOS device to a computer via USB and browse / edit its files. 
+> These instructions use `ifuse` for Linux and macOS; on Windows you can use [iMazing](https://imazing.com/download).
+
+1. convert audio files to `.m4a` with `ffmpeg`, then rename the extension to `.m4r`:
     ```shell
     ffmpeg -i some_tone.wav some_tone.m4a
     mv some_tone.m4a some_tone.m4r
     ```
 
-2. mount the `/Media/` directory of your iOS device to your local filesystem (this does not require a jailbroken device):
+2. mount the `/Media/` directory of your iOS device to local filesystem: 
     ```shell
     mkdir ~/iPhone_Media/
     ifuse ~/iPhone_Media/
     ```
 
-3. copy your `.m4r` files to `~/iPhone_Media/iTunes_Control/Ringtones/`:
+    > [!NOTE]
+    > Mounting `/Media/` does *not* require a jailbroken device.
+
+3. copy your `.m4r` files to `/Media/iTunes_Control/Ringtones/` on the device:
     ```shell
     cp ~/Music/Ringtones/*.m4r ~/iPhone_Media/iTunes_Control/Ringtones/
     ```
@@ -68,3 +75,4 @@ pip install ioscustomringtones
     sudo umount ~/iPhone_Media/
     ```
 
+7. restart your device
