@@ -1,6 +1,6 @@
 [project]
 name = "ioscustomringtones"
-description = "list custom tones in iOS settings by generating `/Media/iTunes_Control/iTunes/Ringtones.plist`"
+description = "use arbitrary audio files as iOS ring and alert tones"
 authors = [{name= "Zachary Burnett", email="zachary.r.burnett@gmail.com"}]
 readme = "README.md"
 license = {text= "GPLv3"}
