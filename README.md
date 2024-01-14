@@ -44,7 +44,7 @@ pip install ioscustomringtones
     pip install ioscustomringtones
     ```
 
-5. run the `write_ios_ringtones_plist` command on the mounted `/Media/` directory:
+5. run the `write_ios_ringtones_plist` command on the mounted `/var/root/Media/` directory:
     ```shell
     write_ios_ringtones_plist ~/iPhone_Media/
     ```
