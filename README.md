@@ -28,7 +28,7 @@ pip install ioscustomringtones
     mv some_tone.m4a some_tone.m4r
     ```
 
-2. mount the `/Media/` directory of your iOS device to local filesystem: 
+2. mount the `/var/root/Media/` directory of your iOS device to local filesystem: 
     ```shell
     mkdir ~/iPhone_Media/
     ifuse ~/iPhone_Media/
@@ -54,12 +54,12 @@ pip install ioscustomringtones
     Usage: write_ios_ringtones_plist [OPTIONS] MEDIA_DIRECTORY
 
       on a mounted iOS filesystem, reads existing `.m4r` files at
-      `/Media/iTunes_Control/Ringtones/` and generates
-      `/Media/iTunes_Control/iTunes/Ringtones.plist`
+      `/var/root/Media/iTunes_Control/Ringtones/` and generates
+      `/var/root/Media/iTunes_Control/iTunes/Ringtones.plist`
 
     Arguments:
-      MEDIA_DIRECTORY  path to the mounted iOS `/Media/` directory
-                       [required]
+      MEDIA_DIRECTORY  path to the mounted iOS `/var/root/Media/`
+                       directory  [required]
 
     Options:
       --alerts-threshold INTEGER    number of seconds under which to
@@ -78,9 +78,9 @@ pip install ioscustomringtones
     ```
 
 
-6. unmount the `/Media/` directory from your local filesystem:
+6. unmount the `/var/root/Media/` directory from your local filesystem:
     ```shell
-    sudo umount ~/iPhone_Media/
+    fusermount -u ~/iPhone_Media/
     ```
 
 7. restart your device

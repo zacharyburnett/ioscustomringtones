@@ -9,7 +9,7 @@ from io import BytesIO
 
 def write_ios_ringtones_plist(
     media_directory: Annotated[
-        Path, typer.Argument(help="path to the mounted iOS `/Media/` directory")
+        Path, typer.Argument(help="path to the mounted iOS `/var/root/Media/` directory")
     ],
     alerts_threshold: Annotated[
         Optional[int],
@@ -40,8 +40,8 @@ def write_ios_ringtones_plist(
 ) -> str:
     """
     on a mounted iOS filesystem,
-    reads existing `.m4r` files at `/Media/iTunes_Control/Ringtones/`
-    and generates `/Media/iTunes_Control/iTunes/Ringtones.plist`
+    reads existing `.m4r` files at `/var/root/Media/iTunes_Control/Ringtones/`
+    and generates `/var/root/Media/iTunes_Control/iTunes/Ringtones.plist`
     """
 
     data = {"Ringtones": {}}
