@@ -25,7 +25,7 @@ def write_ios_ringtones_plist(
     ] = True,
     write: Annotated[
         Optional[bool],
-        typer.Option(help="write to file; otherwise print to stdout"),
+        typer.Option(help="write to file"),
     ] = True,
     overwrite: Annotated[
         Optional[bool],
@@ -36,7 +36,7 @@ def write_ios_ringtones_plist(
     verbose: Annotated[
         Optional[bool],
         typer.Option(help="print individual tones to stdout"),
-    ] = False,
+    ] = True,
 ) -> str:
     """
     on a mounted iOS filesystem,
@@ -85,9 +85,6 @@ def write_ios_ringtones_plist(
         fmt=plistlib.FMT_BINARY if binary else plistlib.FMT_XML,
     )
 
-    if not write:
-        print(file_object.getvalue())
 
-
-def main():
+def run():
     typer.run(write_ios_ringtones_plist)

@@ -33,7 +33,7 @@ dynamic = ["version"]
 Repository = "https://github.com/zacharyburnett/ioscustomringtones"
 
 [project.scripts]
-write_ios_ringtones_plist = "ioscustomringtones.plist:main"
+ioscustomringtones = "ioscustomringtones.plist:run"
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
