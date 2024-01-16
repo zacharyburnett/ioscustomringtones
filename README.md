@@ -2,11 +2,7 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ioscustomringtones)
 ![PyPI - Version](https://img.shields.io/pypi/v/ioscustomringtones)
 
-# use arbitrary audio files as iOS ring and alert tones
-
-```shell
-pip install ioscustomringtones
-```
+# manage custom iOS alert and ring tones on an iOS device
 
 > [!IMPORTANT]
 > This process requires you to connect your iOS device to a computer via USB and browse / edit its files. 
@@ -39,44 +35,12 @@ pip install ioscustomringtones
     cp ~/Music/Ringtones/*.m4r ~/iPhone_Media/iTunes_Control/Ringtones/
     ```
 
-4. install `ioscustomringtones` with `pip`:
+4. download an executable file for your OS from [the Releases page](https://github.com/zacharyburnett/ioscustomringtones/releases)
+
+5. run the `write` command on the mounted `/var/root/Media/` directory:
     ```shell
-    pip install ioscustomringtones
+    ./ioscustomringtones write ~/iPhone_Media/
     ```
-
-5. run the `write_ios_ringtones_plist` command on the mounted `/var/root/Media/` directory:
-    ```shell
-    write_ios_ringtones_plist ~/iPhone_Media/
-    ```
-
-    the `write_ios_ringtones_plist` command provides several options:
-    ```shell
-    Usage: write_ios_ringtones_plist [OPTIONS] MEDIA_DIRECTORY
-
-      on a mounted iOS filesystem, reads existing `.m4r` files at
-      `/var/root/Media/iTunes_Control/Ringtones/` and generates
-      `/var/root/Media/iTunes_Control/iTunes/Ringtones.plist`
-
-    Arguments:
-      MEDIA_DIRECTORY  path to the mounted iOS `/var/root/Media/`
-                       directory  [required]
-
-    Options:
-      --alerts-threshold INTEGER    number of seconds under which to
-                                    assume sound is an alert tone, as
-                                    opposed to a ringtone  [default: 10]
-      --binary / --no-binary        whether to write `.plist` in binary
-                                    format (as opposed to XML)  [default:
-                                    binary]
-      --write / --no-write          write to file; otherwise print to
-                                    stdout  [default: write]
-      --overwrite / --no-overwrite  write over an existing file
-                                    [default: no-overwrite]
-      --verbose / --no-verbose      print individual tones to stdout
-                                    [default: no-verbose]
-      --help                        Show this message and exit.
-    ```
-
 
 6. unmount the `/var/root/Media/` directory from your local filesystem:
     ```shell
@@ -92,3 +56,67 @@ pip install ioscustomringtones
 > ```shell
 > write_ios_ringtones_plist ~/iPhone_Media/ --alerts-threshold 20
 > ```
+
+#### Commands
+
+##### `ioscustomringtones --help`
+
+```shell
+manage custom iOS alert and ring tones on an iOS device (requires `/var/root/Media/` to be mounted locally, i.e. with `ifuse` or iMazing)
+
+Usage: ioscustomringtones <COMMAND>
+
+Commands:
+  write     generate `Ringtones.plist` at `/var/root/Media/iTunes_Control/iTunes/Ringtones.plist`
+  list      list `.m4r` files in `/var/root/Media/iTunes_Control/Ringtones/`
+  validate  list discrepancies between `.m4r` files in `/var/root/Media/iTunes_Control/Ringtones/` and `/var/root/Media/iTunes_Control/iTunes/Ringtones.plist`
+  help      Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
+```
+
+##### `ioscustomringtones validate --help`
+```shell
+list discrepancies between `.m4r` files in `/var/root/Media/iTunes_Control/Ringtones/` and `/var/root/Media/iTunes_Control/iTunes/Ringtones.plist`
+
+Usage: ioscustomringtones validate <MEDIA_DIRECTORY> [ALERTS_THRESHOLD]
+
+Arguments:
+  <MEDIA_DIRECTORY>   path to mounted iOS `/var/root/Media/` directory
+  [ALERTS_THRESHOLD]  number of seconds under which to assume sound is an alert tone, as opposed to a ringtone [default: 10]
+
+Options:
+  -h, --help  Print help
+```
+
+##### `ioscustomringtones list --help`
+```shell
+list `.m4r` files in `/var/root/Media/iTunes_Control/Ringtones/`
+
+Usage: ioscustomringtones list <MEDIA_DIRECTORY> [ALERTS_THRESHOLD]
+
+Arguments:
+  <MEDIA_DIRECTORY>   path to mounted iOS `/var/root/Media/` directory
+  [ALERTS_THRESHOLD]  number of seconds under which to assume sound is an alert tone, as opposed to a ringtone [default: 10]
+
+Options:
+  -h, --help  Print help
+```
+
+##### `ioscustomringtones write --help`
+```shell
+generate `Ringtones.plist` at `/var/root/Media/iTunes_Control/iTunes/Ringtones.plist`
+
+Usage: ioscustomringtones write [OPTIONS] <MEDIA_DIRECTORY> [ALERTS_THRESHOLD]
+
+Arguments:
+  <MEDIA_DIRECTORY>   path to mounted iOS `/var/root/Media/` directory
+  [ALERTS_THRESHOLD]  number of seconds under which to assume sound is an alert tone, as opposed to a ringtone [default: 10]
+
+Options:
+  -b, --binary     write in binary format (otherwise write XML)
+  -o, --overwrite  write over an existing file
+  -h, --help       Print help
+```
