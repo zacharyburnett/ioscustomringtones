@@ -29,7 +29,7 @@ jobs:
         with:
           apt: libavutil-dev libavformat-dev
           brew: automake fdk-aac libass libvpx sdl shtool texi2html theora wget x264 x265 xvid nasm
-          choco: lavfilters pkgconfiglite avbin
+          choco: lavfilters pkgconfiglite ffdshow
       - uses: actions/checkout@v4
       - uses: actions-rust-lang/setup-rust-toolchain@v1
       - run: cargo build --release
