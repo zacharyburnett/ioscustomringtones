@@ -40,5 +40,6 @@ jobs:
       - if: (github.event_name == 'release' && github.event.action == 'published')
         uses: svenstaro/upload-release-action@v2
         with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           asset_name: ioscustomringtones_${{ runner.os }}${{ runner.os == 'Windows' && '.exe' || '' }}
           file: target/release/ioscustomringtones${{ runner.os == 'Windows' && '.exe' || '' }}
