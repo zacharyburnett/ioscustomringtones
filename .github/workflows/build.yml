@@ -30,6 +30,7 @@ jobs:
           apt: libavutil-dev libavformat-dev
           brew: automake fdk-aac libass libvpx sdl shtool texi2html theora wget x264 x265 xvid nasm ffmpeg
           choco: lavfilters pkgconfiglite ffmpeg
+      - run: pkg-config --list-all | grep libavutil
       - uses: actions/checkout@v4
       - uses: actions-rust-lang/setup-rust-toolchain@v1
       - run: cargo build --release
