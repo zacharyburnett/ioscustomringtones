@@ -2,14 +2,43 @@ name: build
 
 on:
   release:
-    types: [ released ]
+    types: [ published ]
+  push:
+    branches:
+      - main
+    paths:
+      - '**.rs'
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
-    with:
-      upload_to_pypi: ${{ (github.event_name == 'release') && (github.event.action == 'released') }}
-    secrets:
-      pypi_token: ${{ secrets.PYPI_TOKEN }}
+    strategy:
+      matrix:
+        runs-on: [ "ubuntu-latest", "macos-latest", "windows-latest" ]
+      fail-fast: false
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - if: runner.os == 'macOS'
+        uses: maxim-lobanov/setup-xcode@v1.6.0
+      - uses: ConorMacBride/install-package@v1.1.0
+        with:
+          apt: libavutil-dev libavformat-dev
+          brew: automake fdk-aac libass libvpx sdl shtool texi2html theora wget x264 x265 xvid nasm ffmpeg
+          choco: lavfilters pkgconfiglite ffmpeg
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - run: cargo build --release
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ioscustomringtones-${{ runner.os }}
+          path: target/release/ioscustomringtones*
+      - if: (github.event_name == 'release' && github.event.action == 'published')
+        uses: svenstaro/upload-release-action@v2
+        with:
+          asset_name: ioscustomringtones_${{ runner.os }}${{ runner.os == 'Windows' && '.exe' || '' }}
+          file: target/release/ioscustomringtones${{ runner.os == 'Windows' && '.exe' || '' }}
