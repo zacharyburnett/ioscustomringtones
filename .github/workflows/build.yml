@@ -28,8 +28,8 @@ jobs:
       - uses: ConorMacBride/install-package@v1.1.0
         with:
           apt: libavutil-dev libavformat-dev
-          brew: automake fdk-aac libass libvpx sdl shtool texi2html theora wget x264 x265 xvid nasm
-          choco: lavfilters pkgconfiglite ffdshow
+          brew: automake fdk-aac libass libvpx sdl shtool texi2html theora wget x264 x265 xvid nasm ffmpeg
+          choco: lavfilters pkgconfiglite ffmpeg
       - uses: actions/checkout@v4
       - uses: actions-rust-lang/setup-rust-toolchain@v1
       - run: cargo build --release
