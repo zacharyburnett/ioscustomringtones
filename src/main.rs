@@ -231,7 +231,8 @@ fn directory_tones(directory: &PathBuf, alerts_threshold: &u16) -> HashMap<Strin
     {
         match entry {
             Ok(path) => {
-                let duration = lofty::read_from_path(path)?.properties.duration.as_secs_f64();
+                let message = format!("could not read {:?}", path.to_owned());
+                let duration = lofty::read_from_path(path).expect(message).properties.duration.as_secs_f64();
                 let media_kind = if duration < *alerts_threshold as f64 {
                     MediaKind::Tone
                 } else {
