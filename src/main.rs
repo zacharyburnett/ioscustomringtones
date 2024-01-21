@@ -6,7 +6,8 @@ extern crate glob;
 use clap::{Parser, Subcommand};
 use core::panic;
 use glob::glob;
-use metadata::media_file::MediaFileMetadata;
+use lofty;
+use lofty::AudioFile;
 use std::collections::HashMap;
 use std::path::PathBuf;
 
@@ -231,7 +232,8 @@ fn directory_tones(directory: &PathBuf, alerts_threshold: &u16) -> HashMap<Strin
     {
         match entry {
             Ok(path) => {
-                let duration = MediaFileMetadata::new(&path).unwrap()._duration.unwrap();
+                let message = format!("could not read {:?}", path.to_owned());
+                let duration = lofty::read_from_path(path.to_owned()).expect(&message).properties().duration().as_secs_f64();
                 let media_kind = if duration < *alerts_threshold as f64 {
                     MediaKind::Tone
                 } else {
