@@ -7,6 +7,7 @@ use clap::{Parser, Subcommand};
 use core::panic;
 use glob::glob;
 use lofty;
+use lofty::AudioFile;
 use std::collections::HashMap;
 use std::path::PathBuf;
 
