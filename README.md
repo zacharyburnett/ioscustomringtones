@@ -55,9 +55,9 @@ These instructions explain how to connect your iPhone to your computer, upload a
 > [!NOTE]
 > By default, any files under 10 seconds in length will be classified 
 > as `tone` (alert / text tones), and above 10 seconds as `ringtone`. 
-> You can change this threshold with the `--alerts-threshold` option, i.e.:
+> You can change this threshold by passing the number of seconds as the second argument:
 > ```shell
-> write_ios_ringtones_plist ~/iPhone_Media/ --alerts-threshold 20
+> ioscustomringtones write ~/iPhone_Media/ 20
 > ```
 
 ## Commands
