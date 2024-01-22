@@ -29,7 +29,7 @@ These instructions explain how to connect your iPhone to your computer, upload a
 > These instructions use `ifuse`, which can be installed on Linux and macOS; 
 > on Windows you can try [iMazing](https://imazing.com/download) or similar software.
 
-4. copy your `.m4r` files to `/Media/iTunes_Control/Ringtones/` on the device:
+4. copy your `.m4r` files to `/var/root/Media/iTunes_Control/Ringtones/` on the device:
     ```shell
     cp ~/Music/Ringtones/*.m4r ~/iPhone_Media/iTunes_Control/Ringtones/
     ```
