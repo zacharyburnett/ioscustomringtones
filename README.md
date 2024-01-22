@@ -6,7 +6,7 @@
 
 These instructions explain how to connect your iPhone to your computer, upload arbitrary audio files to it, and have those audio files show up in your Settings app as text tones, alert tones, and ring tones. This does **not** require a jailbroken device.
 
-#### Instructions
+## Instructions
 
 1. convert your desired audio files to `.m4a`, then rename their file extensions to `.m4r`:
     ```shell
@@ -58,9 +58,9 @@ These instructions explain how to connect your iPhone to your computer, upload a
 > write_ios_ringtones_plist ~/iPhone_Media/ --alerts-threshold 20
 > ```
 
-#### Commands
+## Commands
 
-##### `ioscustomringtones --help`
+### `ioscustomringtones --help`
 
 ```shell
 manage custom iOS alert and ring tones on an iOS device (requires `/var/root/Media/` to be mounted locally, i.e. with `ifuse` or iMazing)
@@ -78,7 +78,7 @@ Options:
   -V, --version  Print version
 ```
 
-##### `ioscustomringtones validate --help`
+### `ioscustomringtones validate --help`
 ```shell
 list discrepancies between `.m4r` files in `/var/root/Media/iTunes_Control/Ringtones/` and `/var/root/Media/iTunes_Control/iTunes/Ringtones.plist`
 
@@ -92,7 +92,7 @@ Options:
   -h, --help  Print help
 ```
 
-##### `ioscustomringtones list --help`
+### `ioscustomringtones list --help`
 ```shell
 list `.m4r` files in `/var/root/Media/iTunes_Control/Ringtones/`
 
@@ -106,7 +106,7 @@ Options:
   -h, --help  Print help
 ```
 
-##### `ioscustomringtones write --help`
+### `ioscustomringtones write --help`
 ```shell
 generate `Ringtones.plist` at `/var/root/Media/iTunes_Control/iTunes/Ringtones.plist`
 
