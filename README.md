@@ -1,6 +1,4 @@
 [![build](https://github.com/zacharyburnett/ioscustomringtones/actions/workflows/build.yml/badge.svg)](https://github.com/zacharyburnett/ioscustomringtones/actions/workflows/build.yml)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ioscustomringtones)
-![PyPI - Version](https://img.shields.io/pypi/v/ioscustomringtones)
 
 # manage custom iPhone alert and ring tones 
 
