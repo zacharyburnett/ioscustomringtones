@@ -45,20 +45,20 @@ These instructions explain how to connect your iPhone to your computer, upload a
     ioscustomringtones.exe write ~/iPhone_Media/
     ```
 
+> [!NOTE]
+> By default, any files under 10 seconds in length will be classified 
+> as `tone` (alert / text tones), and above 10 seconds as `ringtone`. 
+> You can change this threshold by passing the number of seconds as the second argument:
+> ```shell
+> ioscustomringtones.exe write ~/iPhone_Media/ 20
+> ```
+
 7. unmount `/var/root/Media/`:
     ```shell
     fusermount -u ~/iPhone_Media/
     ```
 
 8. disconnect and restart your iPhone
-
-> [!NOTE]
-> By default, any files under 10 seconds in length will be classified 
-> as `tone` (alert / text tones), and above 10 seconds as `ringtone`. 
-> You can change this threshold by passing the number of seconds as the second argument:
-> ```shell
-> ioscustomringtones write ~/iPhone_Media/ 20
-> ```
 
 ## Commands
 
