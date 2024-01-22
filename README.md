@@ -4,7 +4,7 @@
 
 # manage custom iPhone alert and ring tones 
 
-These instructions explain how to connect your iPhone to your computer, upload arbitrary audio files to it, and have those audio files show up in your Settings as options for text, alert, and ring tones. This does **not** require a jailbroken device.
+These instructions explain how to connect your iPhone to your computer, upload arbitrary audio files to it, and have those audio files show up in your Settings app as text tones, alert tones, and ring tones. This does **not** require a jailbroken device.
 
 #### Instructions
 
