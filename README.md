@@ -2,52 +2,53 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ioscustomringtones)
 ![PyPI - Version](https://img.shields.io/pypi/v/ioscustomringtones)
 
-# manage custom iOS alert and ring tones on an iOS device
+# manage custom iPhone alert and ring tones 
 
-> [!IMPORTANT]
-> This process requires you to connect your iOS device to a computer via USB and browse / edit its files. 
-> These instructions use `ifuse` for Linux and macOS; 
-> on Windows you can try [iMazing](https://imazing.com/download) or something similar.
-
-> [!IMPORTANT]
-> The audio files need to have the `.m4r` extension (identical to `.m4a` but the name is important). 
-> I used `ffmpeg` here, but you can use whatever software you like to convert the files.
-
-> [!NOTE]
-> This does *not* require a jailbroken device.
+These instructions explain how to connect your iPhone to your computer, upload arbitrary audio files to it, and have those audio files show up in your Settings as options for text, alert, and ring tones. This does **not** require a jailbroken device.
 
 #### Instructions
 
-1. convert the audio files to `.m4a`, then rename the extension to `.m4r`:
+1. convert your desired audio files to `.m4a`, then rename their file extensions to `.m4r`:
     ```shell
     ffmpeg -i some_tone.wav some_tone.m4a
     mv some_tone.m4a some_tone.m4r
     ```
 
-2. mount the `/var/root/Media/` directory of your iOS device to local filesystem: 
+> [!IMPORTANT]
+> The audio files need to be in `.m4a` format, and then have their file extension renamed from `.m4a` to `.m4r`. Be aware that your file browser likely hides file extensions by default; you may need to change that setting in order to rename the files.
+
+> [!WARNING]
+> If the file extension of an audio file is not already `.m4a`, you must convert the underlying format with `ffmpeg` or similar software. **Simply renaming the extension to `.m4a` will not work.** Remaming works for `.m4a` -> `.m4r` because those two are actually the same file format with different names.
+
+2. connect your iPhone to your computer via USB, unlock it, and accept the prompt asking to `Trust` the connected device (your computer)
+
+3. mount the `/var/root/Media/` directory of your iPhone to an empty folder on your computer: 
     ```shell
     mkdir ~/iPhone_Media/
     ifuse ~/iPhone_Media/
     ```
+> [!IMPORTANT]
+> These instructions use `ifuse`, which can be installed on Linux and macOS; 
+> on Windows you can try [iMazing](https://imazing.com/download) or similar software.
 
-3. copy your `.m4r` files to `/Media/iTunes_Control/Ringtones/` on the device:
+4. copy your `.m4r` files to `/Media/iTunes_Control/Ringtones/` on the device:
     ```shell
     cp ~/Music/Ringtones/*.m4r ~/iPhone_Media/iTunes_Control/Ringtones/
     ```
 
-4. download an executable file for your OS from [the Releases page](https://github.com/zacharyburnett/ioscustomringtones/releases)
+5. download an executable from [the Releases page](https://github.com/zacharyburnett/ioscustomringtones/releases)
 
-5. run the `write` command on the mounted `/var/root/Media/` directory:
+6. run the executable with `write` and wherever you mounted `/var/root/Media/`:
     ```shell
-    ./ioscustomringtones write ~/iPhone_Media/
+    ioscustomringtones.exe write ~/iPhone_Media/
     ```
 
-6. unmount the `/var/root/Media/` directory from your local filesystem:
+7. unmount `/var/root/Media/`:
     ```shell
     fusermount -u ~/iPhone_Media/
     ```
 
-7. restart your device
+8. disconnect and restart your iPhone
 
 > [!NOTE]
 > By default, any files under 10 seconds in length will be classified 
