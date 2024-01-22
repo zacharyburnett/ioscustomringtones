@@ -81,7 +81,7 @@ mod tests {
         let media_directory = PathBuf::from(format!(
             "{:}/{:}",
             env!("CARGO_MANIFEST_DIR"),
-            "data/iPhone_Media"
+            "example/iPhone_Media"
         ));
         let tones = tones_in_directory(&tones_directory(&media_directory), &10);
 
@@ -152,7 +152,7 @@ mod tests {
         let media_directory = PathBuf::from(format!(
             "{:}/{:}",
             env!("CARGO_MANIFEST_DIR"),
-            "data/iPhone_Media"
+            "example/iPhone_Media"
         ));
         let tones = tones_in_directory(&tones_directory(&media_directory), &1);
 
@@ -177,7 +177,7 @@ mod tests {
         let media_directory = PathBuf::from(format!(
             "{:}/{:}",
             env!("CARGO_MANIFEST_DIR"),
-            "data/iPhone_Media"
+            "example/iPhone_Media"
         ));
         let tones = tones_in_directory(&tones_directory(&media_directory), &12);
 

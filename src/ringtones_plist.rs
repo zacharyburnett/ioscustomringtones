@@ -122,7 +122,7 @@ mod tests {
         let media_directory = PathBuf::from(format!(
             "{:}/{:}",
             env!("CARGO_MANIFEST_DIR"),
-            "data/iPhone_Media"
+            "example/iPhone_Media"
         ));
 
         let filename = media_directory
