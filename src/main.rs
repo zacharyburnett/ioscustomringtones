@@ -27,9 +27,9 @@ enum Command {
         /// number of seconds under which to assume sound is an alert tone, as opposed to a ringtone
         #[arg(default_value_t = 10)]
         alerts_threshold: u16,
-        /// write in binary format (otherwise write XML)
-        #[arg(short, long, default_value_t = true)]
-        binary: bool,
+        /// write `.plist` in XML format
+        #[arg(short, long, action)]
+        xml: bool,
         /// write over an existing file
         #[arg(short, long, default_value_t = false)]
         overwrite: bool,
@@ -89,7 +89,7 @@ fn main() {
         Command::Write {
             media_directory,
             alerts_threshold,
-            binary,
+            xml,
             overwrite,
         } => {
             let tones_directory = media_directory.join("iTunes_Control/Ringtones");
@@ -112,10 +112,10 @@ fn main() {
             let generated_list = Ringtones { ringtones: tones };
 
             let message = format!("unable to write {:?}", filename);
-            if binary {
-                plist::to_file_binary(filename, &generated_list).expect(&message);
-            } else {
+            if xml {
                 plist::to_file_xml(filename, &generated_list).expect(&message);
+            } else {
+                plist::to_file_binary(filename, &generated_list).expect(&message);
             }
         }
         Command::List {
@@ -233,7 +233,11 @@ fn directory_tones(directory: &PathBuf, alerts_threshold: &u16) -> HashMap<Strin
         match entry {
             Ok(path) => {
                 let message = format!("could not read {:?}", path.to_owned());
-                let duration = lofty::read_from_path(path.to_owned()).expect(&message).properties().duration().as_secs_f64();
+                let duration = lofty::read_from_path(path.to_owned())
+                    .expect(&message)
+                    .properties()
+                    .duration()
+                    .as_secs_f64();
                 let media_kind = if duration < *alerts_threshold as f64 {
                     MediaKind::Tone
                 } else {
