@@ -4,6 +4,7 @@ use crate::data::{MediaKind, Tone};
 use glob::glob;
 use lofty;
 use lofty::AudioFile;
+use sha256;
 use std::collections::HashMap;
 
 pub fn tones_in_directory(directory: &PathBuf, alerts_threshold: &u16) -> HashMap<String, Tone> {
@@ -23,7 +24,7 @@ pub fn tones_in_directory(directory: &PathBuf, alerts_threshold: &u16) -> HashMa
 
     paths.sort_unstable();
 
-    for (index, path) in paths.iter().enumerate() {
+    for path in paths {
         let message = format!("could not read {:?}", path.to_owned());
         let duration = lofty::read_from_path(path.to_owned())
             .expect(&message)
@@ -36,15 +37,17 @@ pub fn tones_in_directory(directory: &PathBuf, alerts_threshold: &u16) -> HashMa
             MediaKind::Ringtone
         };
 
+        let name = path.file_name().unwrap().to_str().unwrap().to_string();
+
         tones.insert(
-            path.file_name().unwrap().to_str().unwrap().to_string(),
+            name.to_owned(),
             Tone {
                 name: path.file_stem().unwrap().to_str().unwrap().to_string(),
                 total_time: duration,
                 media_kind,
                 protected_content: false,
-                pid: 4918251813855823052 + index as u64,
-                guid: format!("B9753FD82AE718E{}", 2 + index),
+                pid: string_to_pid(&name),
+                guid: string_to_guid(&name),
             },
         );
     }
@@ -69,6 +72,30 @@ pub fn print_tones_in_directory(tones_directory: &PathBuf, alerts_threshold: &u1
         let media_kind = format!("{:?}", tone.media_kind);
         let total_time = format!("{:3.1}", tone.total_time);
         println!("{:>8} ({:>5}s) {}", media_kind, total_time, tone.name)
+    }
+}
+
+/// pseudo-hash of string to 19-digit PID
+fn string_to_pid(string: &str) -> u64 {
+    let hash = sha256::digest(string);
+    let mut digits = String::new();
+    for character in hash.as_bytes() {
+        digits.push_str(&character.to_string());
+    }
+
+    {
+        let start_index = digits.to_string().char_indices().nth_back(18).unwrap().0;
+        digits[start_index..].parse::<u64>().unwrap()
+    }
+}
+
+/// pseudo-hash of string to 16-character GUID
+fn string_to_guid(string: &str) -> String {
+    let hash = sha256::digest(string);
+
+    {
+        let start_index = hash.to_string().char_indices().nth_back(15).unwrap().0;
+        hash[start_index..].to_string()
     }
 }
 
@@ -195,5 +222,31 @@ mod tests {
         assert_eq!(MediaKind::Tone, tone_2.media_kind);
         assert_eq!(MediaKind::Tone, tone_3.media_kind);
         assert_eq!(MediaKind::Ringtone, tone_4.media_kind);
+    }
+
+    #[test]
+    fn test_string_to_pid() {
+        let filename_1 = "TP_Bottle_Pop.m4r";
+        let filename_2 = "SC_Strategic_Launch.m4r";
+        let filename_3 = "TP_HawkGrass.m4r";
+        let filename_4 = "OuterWilds_End_Times.m4r";
+
+        assert_eq!(string_to_pid(filename_1), 5550521009748555449);
+        assert_eq!(string_to_pid(filename_2), 5049102565010010251);
+        assert_eq!(string_to_pid(filename_3), 4898495154494849100);
+        assert_eq!(string_to_pid(filename_4), 9102535255494951101);
+    }
+
+    #[test]
+    fn test_string_to_guid() {
+        let filename_1 = "TP_Bottle_Pop.m4r";
+        let filename_2 = "SC_Strategic_Launch.m4r";
+        let filename_3 = "TP_HawkGrass.m4r";
+        let filename_4 = "OuterWilds_End_Times.m4r";
+
+        assert_eq!(string_to_guid(filename_1), "9ff460f724da0761");
+        assert_eq!(string_to_guid(filename_2), "5231123621f82df3");
+        assert_eq!(string_to_guid(filename_3), "03461b80b136101d");
+        assert_eq!(string_to_guid(filename_4), "72f93bb1f547113e");
     }
 }
